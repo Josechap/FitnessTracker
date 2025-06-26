@@ -1,8 +1,8 @@
-import { useState, useCallback } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { DEFAULT_LAYOUTS } from "@/lib/utils";
-import type { Layout, Layouts } from "react-grid-layout";
+import { useState, useCallback } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
+import { DEFAULT_LAYOUTS } from '@/lib/utils';
+import type { Layout, Layouts } from 'react-grid-layout';
 
 interface LayoutHook {
   layouts: Layouts;
@@ -17,7 +17,7 @@ export function useWidgetLayout(userId: number, initialLayouts?: Layouts): Layou
 
   const saveLayoutMutation = useMutation({
     mutationFn: async (layoutData: Layouts) => {
-      const response = await apiRequest("POST", "/api/dashboard-layout", {
+      const response = await apiRequest('POST', '/api/dashboard-layout', {
         userId,
         layoutData,
       });
@@ -29,16 +29,19 @@ export function useWidgetLayout(userId: number, initialLayouts?: Layouts): Layou
     },
   });
 
-  const onLayoutChange = useCallback((layout: Layout[], layouts: Layouts) => {
-    setLayouts(layouts);
-    
-    // Debounce the save operation
-    const timeoutId = setTimeout(() => {
-      saveLayoutMutation.mutate(layouts);
-    }, 1000);
+  const onLayoutChange = useCallback(
+    (layout: Layout[], layouts: Layouts) => {
+      setLayouts(layouts);
 
-    return () => clearTimeout(timeoutId);
-  }, [saveLayoutMutation]);
+      // Debounce the save operation
+      const timeoutId = setTimeout(() => {
+        saveLayoutMutation.mutate(layouts);
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    },
+    [saveLayoutMutation],
+  );
 
   const resetLayouts = useCallback(() => {
     setLayouts(DEFAULT_LAYOUTS);

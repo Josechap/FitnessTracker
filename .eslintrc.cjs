@@ -5,45 +5,43 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
     },
-    project: [
-      "./tsconfig.json",
-    ],
+    project: ['./tsconfig.json'],
   },
   plugins: [
-    "@typescript-eslint",
-    "react",
-    "react-hooks",
-    "unused-imports",
-    "tailwindcss",
-    "prettier",
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'unused-imports',
+    'tailwindcss',
+    'prettier',
   ],
   extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:tailwindcss/recommended",
-    "plugin:prettier/recommended",
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:tailwindcss/recommended',
+    'plugin:prettier/recommended',
   ],
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
-    "import/resolver": {
+    'import/resolver': {
       typescript: {},
     },
   },
   rules: {
-    "prettier/prettier": ["error"],
-    "react/react-in-jsx-scope": "off", // Not needed with React 17+
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "unused-imports/no-unused-imports": "error",
+    'prettier/prettier': ['error'],
+    'react/react-in-jsx-scope': 'off', // Not needed with React 17+
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'unused-imports/no-unused-imports': 'error',
   },
 };

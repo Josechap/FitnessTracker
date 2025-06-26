@@ -1,10 +1,19 @@
-import { 
-  users, fitnessMetrics, workouts, nutrition, goals, aiRecommendations, dashboardLayouts,
-  type User, type InsertUser, type FitnessMetrics, type InsertFitnessMetrics,
-  type Workout, type InsertWorkout, type Nutrition, type InsertNutrition,
-  type Goal, type InsertGoal, type AIRecommendation, type InsertAIRecommendation,
-  type DashboardLayout, type InsertDashboardLayout
-} from "@shared/schema";
+import {
+  type User,
+  type InsertUser,
+  type FitnessMetrics,
+  type InsertFitnessMetrics,
+  type Workout,
+  type InsertWorkout,
+  type Nutrition,
+  type InsertNutrition,
+  type Goal,
+  type InsertGoal,
+  type AIRecommendation,
+  type InsertAIRecommendation,
+  type DashboardLayout,
+  type InsertDashboardLayout,
+} from '@shared/schema';
 
 export interface IStorage {
   // Users
@@ -49,7 +58,7 @@ export class MemStorage implements IStorage {
   private goals: Map<number, Goal> = new Map();
   private aiRecommendations: Map<number, AIRecommendation> = new Map();
   private dashboardLayouts: Map<number, DashboardLayout> = new Map();
-  
+
   private currentUserId = 1;
   private currentMetricsId = 1;
   private currentWorkoutId = 1;
@@ -66,13 +75,14 @@ export class MemStorage implements IStorage {
     // Create demo user
     const demoUser: User = {
       id: 1,
-      username: "alex_johnson",
-      email: "alex.johnson@example.com",
-      password: "hashed_password",
-      firstName: "Alex",
-      lastName: "Johnson",
-      profileImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100",
-      membershipType: "premium",
+      username: 'alex_johnson',
+      email: 'alex.johnson@example.com',
+      password: 'hashed_password',
+      firstName: 'Alex',
+      lastName: 'Johnson',
+      profileImage:
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100',
+      membershipType: 'premium',
       createdAt: new Date(),
     };
     this.users.set(1, demoUser);
@@ -83,7 +93,7 @@ export class MemStorage implements IStorage {
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
-      
+
       const metrics: FitnessMetrics = {
         id: this.currentMetricsId++,
         userId: 1,
@@ -93,7 +103,7 @@ export class MemStorage implements IStorage {
         hrvScore: 40 + Math.floor(Math.random() * 20),
         sleepHours: 7.5 + Math.random() * 1.5,
         sleepQuality: 0.7 + Math.random() * 0.3,
-        weight: 175 - (i * 0.2),
+        weight: 175 - i * 0.2,
         bodyFatPercentage: 15 + Math.random() * 2,
         restingHeartRate: 60 + Math.floor(Math.random() * 10),
       };
@@ -104,32 +114,32 @@ export class MemStorage implements IStorage {
     const sampleWorkouts: InsertWorkout[] = [
       {
         userId: 1,
-        name: "Upper Body Strength",
-        type: "strength",
+        name: 'Upper Body Strength',
+        type: 'strength',
         duration: 75,
         caloriesBurned: 320,
         exercises: [
-          { name: "Bench Press", sets: 4, reps: 8, weight: 185 },
-          { name: "Pull-ups", sets: 3, reps: 12 },
-          { name: "Shoulder Press", sets: 3, reps: 10, weight: 135 }
+          { name: 'Bench Press', sets: 4, reps: 8, weight: 185 },
+          { name: 'Pull-ups', sets: 3, reps: 12 },
+          { name: 'Shoulder Press', sets: 3, reps: 10, weight: 135 },
         ],
         rpe: 8,
-        notes: "Great session, felt strong",
+        notes: 'Great session, felt strong',
       },
       {
         userId: 1,
-        name: "HIIT Cardio",
-        type: "hiit",
+        name: 'HIIT Cardio',
+        type: 'hiit',
         duration: 30,
         caloriesBurned: 280,
         exercises: [
-          { name: "Burpees", duration: 45, rest: 15 },
-          { name: "Mountain Climbers", duration: 45, rest: 15 },
-          { name: "Jump Squats", duration: 45, rest: 15 }
+          { name: 'Burpees', duration: 45, rest: 15 },
+          { name: 'Mountain Climbers', duration: 45, rest: 15 },
+          { name: 'Jump Squats', duration: 45, rest: 15 },
         ],
         rpe: 9,
-        notes: "Intense workout, good sweat",
-      }
+        notes: 'Intense workout, good sweat',
+      },
     ];
 
     sampleWorkouts.forEach(workout => {
@@ -152,10 +162,10 @@ export class MemStorage implements IStorage {
       fats: 80,
       water: 3.2,
       meals: [
-        { name: "Breakfast", calories: 450, protein: 25 },
-        { name: "Lunch", calories: 650, protein: 45 },
-        { name: "Dinner", calories: 720, protein: 55 },
-        { name: "Snacks", calories: 520, protein: 40 }
+        { name: 'Breakfast', calories: 450, protein: 25 },
+        { name: 'Lunch', calories: 650, protein: 45 },
+        { name: 'Dinner', calories: 720, protein: 55 },
+        { name: 'Snacks', calories: 520, protein: 40 },
       ],
     };
     this.nutrition.set(nutritionData.id, nutritionData);
@@ -164,26 +174,26 @@ export class MemStorage implements IStorage {
     const sampleGoals: InsertGoal[] = [
       {
         userId: 1,
-        title: "Lose 10 lbs",
-        type: "weight_loss",
+        title: 'Lose 10 lbs',
+        type: 'weight_loss',
         targetValue: 165,
         currentValue: 175,
-        unit: "lbs",
-        targetDate: new Date("2024-12-31"),
+        unit: 'lbs',
+        targetDate: new Date('2024-12-31'),
         probability: 0.87,
         isActive: true,
       },
       {
         userId: 1,
-        title: "Bench 225 lbs",
-        type: "strength",
+        title: 'Bench 225 lbs',
+        type: 'strength',
         targetValue: 225,
         currentValue: 185,
-        unit: "lbs",
-        targetDate: new Date("2025-01-31"),
+        unit: 'lbs',
+        targetDate: new Date('2025-01-31'),
         probability: 0.64,
         isActive: true,
-      }
+      },
     ];
 
     sampleGoals.forEach(goal => {
@@ -199,28 +209,29 @@ export class MemStorage implements IStorage {
     const recommendations: InsertAIRecommendation[] = [
       {
         userId: 1,
-        type: "recovery",
-        title: "Recovery Focus",
-        message: "Your HRV is elevated. Consider a light cardio session instead of heavy lifting today.",
-        priority: "high",
+        type: 'recovery',
+        title: 'Recovery Focus',
+        message:
+          'Your HRV is elevated. Consider a light cardio session instead of heavy lifting today.',
+        priority: 'high',
         isRead: false,
       },
       {
         userId: 1,
-        type: "nutrition",
-        title: "Nutrition Timing",
-        message: "Increase protein intake by 20g to support your strength goals this week.",
-        priority: "medium",
+        type: 'nutrition',
+        title: 'Nutrition Timing',
+        message: 'Increase protein intake by 20g to support your strength goals this week.',
+        priority: 'medium',
         isRead: false,
       },
       {
         userId: 1,
-        type: "sleep",
-        title: "Sleep Optimization",
-        message: "Try going to bed 30 minutes earlier to hit your 8.5h sleep target.",
-        priority: "medium",
+        type: 'sleep',
+        title: 'Sleep Optimization',
+        message: 'Try going to bed 30 minutes earlier to hit your 8.5h sleep target.',
+        priority: 'medium',
         isRead: false,
-      }
+      },
     ];
 
     recommendations.forEach(rec => {
@@ -256,7 +267,7 @@ export class MemStorage implements IStorage {
   async getFitnessMetrics(userId: number, days = 7): Promise<FitnessMetrics[]> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
-    
+
     return Array.from(this.fitnessMetrics.values())
       .filter(m => m.userId === userId && m.date >= cutoffDate)
       .sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -276,7 +287,7 @@ export class MemStorage implements IStorage {
     const userMetrics = Array.from(this.fitnessMetrics.values())
       .filter(m => m.userId === userId)
       .sort((a, b) => b.date.getTime() - a.date.getTime());
-    
+
     return userMetrics[0];
   }
 
@@ -306,7 +317,7 @@ export class MemStorage implements IStorage {
   async getNutrition(userId: number, days = 7): Promise<Nutrition[]> {
     const cutoffDate = new Date();
     cutoffDate.setDate(cutoffDate.getDate() - days);
-    
+
     return Array.from(this.nutrition.values())
       .filter(n => n.userId === userId && n.date >= cutoffDate)
       .sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -326,7 +337,7 @@ export class MemStorage implements IStorage {
     const userNutrition = Array.from(this.nutrition.values())
       .filter(n => n.userId === userId)
       .sort((a, b) => b.date.getTime() - a.date.getTime());
-    
+
     return userNutrition[0];
   }
 
@@ -376,14 +387,14 @@ export class MemStorage implements IStorage {
 
   // Dashboard Layout methods
   async getDashboardLayout(userId: number): Promise<DashboardLayout | undefined> {
-    return Array.from(this.dashboardLayouts.values())
-      .find(layout => layout.userId === userId);
+    return Array.from(this.dashboardLayouts.values()).find(layout => layout.userId === userId);
   }
 
   async saveDashboardLayout(insertLayout: InsertDashboardLayout): Promise<DashboardLayout> {
     // Check if layout exists for this user
-    const existingLayout = Array.from(this.dashboardLayouts.values())
-      .find(layout => layout.userId === insertLayout.userId);
+    const existingLayout = Array.from(this.dashboardLayouts.values()).find(
+      layout => layout.userId === insertLayout.userId,
+    );
 
     if (existingLayout) {
       const updatedLayout: DashboardLayout = {

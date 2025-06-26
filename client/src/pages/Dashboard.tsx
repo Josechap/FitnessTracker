@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useDashboardData, useFitnessMetrics } from "@/hooks/useDashboardData";
-import { Sidebar } from "@/components/dashboard/Sidebar";
-import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
-import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from 'react';
+import { useDashboardData, useFitnessMetrics } from '@/hooks/useDashboardData';
+import { Sidebar } from '@/components/dashboard/Sidebar';
+import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -46,19 +46,19 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-dark-primary text-white">
-      <Sidebar 
+      <Sidebar
         user={dashboardData.user}
         isOpen={sidebarOpen}
         onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
-      
+
       <main className="md:ml-64 min-h-screen">
-        <DashboardHeader 
+        <DashboardHeader
           user={dashboardData.user}
           metrics={dashboardData.metrics}
           onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
         />
-        
+
         <DashboardLayout
           user={dashboardData.user}
           metrics={dashboardData.metrics}

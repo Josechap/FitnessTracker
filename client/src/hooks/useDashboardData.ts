@@ -1,5 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import type { User, FitnessMetrics, Workout, Nutrition, Goal, AIRecommendation, DashboardLayout } from "@shared/schema";
+import { useQuery } from '@tanstack/react-query';
+import type {
+  User,
+  FitnessMetrics,
+  Workout,
+  Nutrition,
+  Goal,
+  AIRecommendation,
+  DashboardLayout,
+} from '@shared/schema';
 
 interface DashboardData {
   user: User;

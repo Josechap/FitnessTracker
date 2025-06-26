@@ -1,5 +1,5 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,7 +11,7 @@ export const BREAKPOINTS = {
   md: 996,
   sm: 768,
   xs: 480,
-  xxs: 0
+  xxs: 0,
 };
 
 // Default grid columns for different breakpoints
@@ -20,7 +20,7 @@ export const GRID_COLS = {
   md: 10,
   sm: 6,
   xs: 4,
-  xxs: 2
+  xxs: 2,
 };
 
 // Widget size constraints
@@ -28,7 +28,7 @@ export const WIDGET_CONSTRAINTS = {
   minW: 2,
   minH: 2,
   maxW: 12,
-  maxH: 8
+  maxH: 8,
 };
 
 // Default widget layouts
@@ -42,7 +42,7 @@ export const DEFAULT_LAYOUTS = {
     { i: 'ai-recommendations', x: 8, y: 2, w: 4, h: 4 },
     { i: 'goal-progress', x: 0, y: 6, w: 8, h: 4 },
     { i: 'daily-plan', x: 8, y: 6, w: 4, h: 3 },
-    { i: 'weekly-summary', x: 8, y: 9, w: 4, h: 3 }
+    { i: 'weekly-summary', x: 8, y: 9, w: 4, h: 3 },
   ],
   md: [
     { i: 'stats-steps', x: 0, y: 0, w: 2, h: 2 },
@@ -53,7 +53,7 @@ export const DEFAULT_LAYOUTS = {
     { i: 'ai-recommendations', x: 6, y: 2, w: 4, h: 4 },
     { i: 'goal-progress', x: 0, y: 6, w: 6, h: 4 },
     { i: 'daily-plan', x: 6, y: 6, w: 4, h: 3 },
-    { i: 'weekly-summary', x: 6, y: 9, w: 4, h: 3 }
+    { i: 'weekly-summary', x: 6, y: 9, w: 4, h: 3 },
   ],
   sm: [
     { i: 'stats-steps', x: 0, y: 0, w: 3, h: 2 },
@@ -64,7 +64,7 @@ export const DEFAULT_LAYOUTS = {
     { i: 'ai-recommendations', x: 0, y: 8, w: 6, h: 4 },
     { i: 'goal-progress', x: 0, y: 12, w: 6, h: 4 },
     { i: 'daily-plan', x: 0, y: 16, w: 6, h: 3 },
-    { i: 'weekly-summary', x: 0, y: 19, w: 6, h: 3 }
+    { i: 'weekly-summary', x: 0, y: 19, w: 6, h: 3 },
   ],
   xs: [
     { i: 'stats-steps', x: 0, y: 0, w: 4, h: 2 },
@@ -75,8 +75,8 @@ export const DEFAULT_LAYOUTS = {
     { i: 'ai-recommendations', x: 0, y: 12, w: 4, h: 4 },
     { i: 'goal-progress', x: 0, y: 16, w: 4, h: 4 },
     { i: 'daily-plan', x: 0, y: 20, w: 4, h: 3 },
-    { i: 'weekly-summary', x: 0, y: 23, w: 4, h: 3 }
-  ]
+    { i: 'weekly-summary', x: 0, y: 23, w: 4, h: 3 },
+  ],
 };
 
 // Format numbers with appropriate precision
@@ -99,7 +99,7 @@ export function formatPercentage(value: number): string {
 export function formatDuration(minutes: number): string {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  
+
   if (hours > 0) {
     return `${hours}h ${mins}m`;
   }
@@ -107,7 +107,11 @@ export function formatDuration(minutes: number): string {
 }
 
 // Get readiness status based on score
-export function getReadinessStatus(score: number): { status: string; color: string; label: string } {
+export function getReadinessStatus(score: number): {
+  status: string;
+  color: string;
+  label: string;
+} {
   if (score >= 85) {
     return { status: 'excellent', color: 'text-green-400', label: 'Ready' };
   } else if (score >= 70) {
@@ -118,7 +122,11 @@ export function getReadinessStatus(score: number): { status: string; color: stri
 }
 
 // Get goal probability status
-export function getGoalProbabilityStatus(probability: number): { status: string; color: string; label: string } {
+export function getGoalProbabilityStatus(probability: number): {
+  status: string;
+  color: string;
+  label: string;
+} {
   if (probability >= 0.8) {
     return { status: 'likely', color: 'text-green-400', label: 'Likely' };
   } else if (probability >= 0.6) {

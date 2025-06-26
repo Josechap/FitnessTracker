@@ -1,6 +1,6 @@
-import { DraggableWidget } from "../DraggableWidget";
-import { formatNumber } from "@/lib/utils";
-import { LucideIcon } from "lucide-react";
+import { DraggableWidget } from '../DraggableWidget';
+import { formatNumber } from '@/lib/utils';
+import { LucideIcon } from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
@@ -11,13 +11,13 @@ interface StatsCardProps {
   gradient?: 'primary' | 'secondary' | 'green' | 'blue';
 }
 
-export function StatsCard({ 
-  title, 
-  value, 
-  change, 
+export function StatsCard({
+  title,
+  value,
+  change,
   changeType = 'positive',
   icon: Icon,
-  gradient = 'primary'
+  gradient = 'primary',
 }: StatsCardProps) {
   const getGradientClass = () => {
     switch (gradient) {
@@ -62,13 +62,11 @@ export function StatsCard({
           <p className="text-2xl font-bold mt-1 text-white">
             {typeof value === 'number' ? formatNumber(value) : value}
           </p>
-          {change && (
-            <p className={`text-xs mt-1 ${getChangeColor()}`}>
-              {change}
-            </p>
-          )}
+          {change && <p className={`text-xs mt-1 ${getChangeColor()}`}>{change}</p>}
         </div>
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${getGradientClass()}`}>
+        <div
+          className={`w-12 h-12 rounded-xl flex items-center justify-center ${getGradientClass()}`}
+        >
           <Icon className={`h-6 w-6 ${getIconColor()}`} />
         </div>
       </div>

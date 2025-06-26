@@ -1,6 +1,6 @@
-import { DraggableWidget } from "../DraggableWidget";
-import { Brain, Lightbulb, Utensils, Bed } from "lucide-react";
-import type { AIRecommendation } from "@shared/schema";
+import { DraggableWidget } from '../DraggableWidget';
+import { Brain, Lightbulb, Utensils, Bed } from 'lucide-react';
+import type { AIRecommendation } from '@shared/schema';
 
 interface AIRecommendationsProps {
   recommendations: AIRecommendation[];
@@ -46,12 +46,15 @@ export function AIRecommendations({ recommendations }: AIRecommendationsProps) {
       </div>
 
       <div className="space-y-4">
-        {recommendations.map((rec) => {
+        {recommendations.map(rec => {
           const Icon = getRecommendationIcon(rec.type);
           const colorClass = getRecommendationColor(rec.type);
-          
+
           return (
-            <div key={rec.id} className={`bg-dark-tertiary/30 p-4 rounded-xl border-l-4 ${colorClass.split(' ')[0]}`}>
+            <div
+              key={rec.id}
+              className={`bg-dark-tertiary/30 p-4 rounded-xl border-l-4 ${colorClass.split(' ')[0]}`}
+            >
               <div className="flex items-start space-x-3">
                 <Icon className={`${colorClass.split(' ')[1]} mt-1 h-4 w-4`} />
                 <div>

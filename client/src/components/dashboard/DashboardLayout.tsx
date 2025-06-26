@@ -1,27 +1,22 @@
-import { Responsive, WidthProvider } from "react-grid-layout";
-import { BREAKPOINTS, GRID_COLS, WIDGET_CONSTRAINTS } from "@/lib/utils";
-import { useWidgetLayout } from "@/hooks/useWidgetLayout";
-import { StatsCard } from "./widgets/StatsCard";
-import { PerformanceChart } from "./widgets/PerformanceChart";
-import { GoalProgress } from "./widgets/GoalProgress";
-import { AIRecommendations } from "./widgets/AIRecommendations";
-import { DailyPlan } from "./widgets/DailyPlan";
-import { WeeklySummary } from "./widgets/WeeklySummary";
-import { 
-  Footprints, 
-  Flame, 
-  Heart, 
-  Moon 
-} from "lucide-react";
-import type { 
-  User, 
-  FitnessMetrics, 
-  Workout, 
-  Nutrition, 
-  Goal, 
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import { BREAKPOINTS, GRID_COLS } from '@/lib/utils';
+import { useWidgetLayout } from '@/hooks/useWidgetLayout';
+import { StatsCard } from './widgets/StatsCard';
+import { PerformanceChart } from './widgets/PerformanceChart';
+import { GoalProgress } from './widgets/GoalProgress';
+import { AIRecommendations } from './widgets/AIRecommendations';
+import { DailyPlan } from './widgets/DailyPlan';
+import { WeeklySummary } from './widgets/WeeklySummary';
+import { Footprints, Flame, Heart, Moon } from 'lucide-react';
+import type {
+  User,
+  FitnessMetrics,
+  Workout,
+  Nutrition,
+  Goal,
   AIRecommendation,
-  DashboardLayout as DashboardLayoutType
-} from "@shared/schema";
+  DashboardLayout as DashboardLayoutType,
+} from '@shared/schema';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -44,11 +39,11 @@ export function DashboardLayout({
   nutrition,
   goals,
   recommendations,
-  savedLayout
+  savedLayout,
 }: DashboardLayoutProps) {
   const { layouts, onLayoutChange } = useWidgetLayout(
-    user.id, 
-    savedLayout?.layoutData as any || undefined
+    user.id,
+    (savedLayout?.layoutData as any) || undefined,
   );
 
   const renderWidget = (key: string) => {
@@ -64,7 +59,7 @@ export function DashboardLayout({
             gradient="primary"
           />
         );
-      
+
       case 'stats-calories':
         return (
           <StatsCard
@@ -76,7 +71,7 @@ export function DashboardLayout({
             gradient="secondary"
           />
         );
-      
+
       case 'stats-hrv':
         return (
           <StatsCard
@@ -88,7 +83,7 @@ export function DashboardLayout({
             gradient="green"
           />
         );
-      
+
       case 'stats-sleep':
         return (
           <StatsCard
@@ -100,22 +95,22 @@ export function DashboardLayout({
             gradient="blue"
           />
         );
-      
+
       case 'performance-chart':
         return <PerformanceChart metrics={weeklyMetrics} />;
-      
+
       case 'goal-progress':
         return <GoalProgress goals={goals} />;
-      
+
       case 'ai-recommendations':
         return <AIRecommendations recommendations={recommendations} />;
-      
+
       case 'daily-plan':
         return <DailyPlan todaysWorkout={workouts[0]} nutrition={nutrition} />;
-      
+
       case 'weekly-summary':
         return <WeeklySummary workouts={workouts} weeklyMetrics={weeklyMetrics} />;
-      
+
       default:
         return <div>Unknown widget: {key}</div>;
     }
@@ -138,7 +133,7 @@ export function DashboardLayout({
         containerPadding={[0, 0]}
         useCSSTransforms={true}
       >
-        {(layouts.lg || []).map((item) => (
+        {(layouts.lg || []).map(item => (
           <div key={item.i} className="react-grid-item">
             {renderWidget(item.i)}
           </div>
