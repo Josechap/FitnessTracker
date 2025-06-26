@@ -138,9 +138,9 @@ export function DashboardLayout({
         containerPadding={[0, 0]}
         useCSSTransforms={true}
       >
-        {Object.keys(layouts.lg || []).map((key) => (
-          <div key={key} className="react-grid-item">
-            {renderWidget(key)}
+        {(layouts.lg || []).map((item) => (
+          <div key={item.i} className="react-grid-item">
+            {renderWidget(item.i)}
           </div>
         ))}
       </ResponsiveGridLayout>
