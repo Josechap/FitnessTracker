@@ -13,7 +13,7 @@ interface DashboardData {
 
 export function useDashboardData(userId: number) {
   return useQuery<DashboardData>({
-    queryKey: ['/api/dashboard', userId],
+    queryKey: [`/api/dashboard/${userId}`],
     enabled: !!userId,
     refetchInterval: 30000, // Refetch every 30 seconds for real-time updates
   });
@@ -21,7 +21,7 @@ export function useDashboardData(userId: number) {
 
 export function useFitnessMetrics(userId: number, days: number = 7) {
   return useQuery<FitnessMetrics[]>({
-    queryKey: ['/api/fitness-metrics', userId, { days }],
+    queryKey: [`/api/fitness-metrics/${userId}?days=${days}`],
     enabled: !!userId,
   });
 }

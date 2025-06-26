@@ -48,7 +48,7 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   const { layouts, onLayoutChange } = useWidgetLayout(
     user.id, 
-    savedLayout?.layoutData || undefined
+    savedLayout?.layoutData as any || undefined
   );
 
   const renderWidget = (key: string) => {
