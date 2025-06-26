@@ -1,0 +1,80 @@
+I am working on a fitness app. The requirements are below. Backend is supabase. Create the UI for the app:
+
+1. Product Overview
+
+Product Name: Apex Coach
+Purpose: A mobile app that integrates iPhone sensor data, nutrition, and workout inputs to deliver personalized, predictive, and real-time coaching for fitness outcomes.
+Target Audience: Fitness-conscious individuals seeking guided, adaptive coaching based on real-time data and AI modeling.
+
+⸻
+
+2. Goals and Objectives
+	•	Deliver actionable daily and weekly feedback across training, recovery, and nutrition.
+	•	Maximize fitness goal attainment using predictive modeling.
+	•	Provide real-time, adaptive coaching during workouts.
+	•	Integrate with iPhone sensors (HR, HRV, GPS, motion) and nutrition tracking apps.
+
+⸻
+
+3. Key Features
+
+3.1 Data Integration Engine
+	•	Apple HealthKit sync: HR, HRV, VO2Max, sleep, step count, workouts
+	•	Nutrition API sync: MacroFactor, MyFitnessPal, Cronometer
+	•	Sensor input: Gyroscope, Accelerometer, GPS (for run/cycle tracking)
+
+3.2 Predictive Engine
+	•	ML-based goal tracking model
+	•	Inputs: caloric intake, macros, training volume/intensity, HRV trends, sleep quality
+	•	Outputs: weekly probability of goal achievement (cutting, bulking, strength goals)
+	•	Forecast adjustments: recommend macro tweaks, rest days, deloads, or intensity ramp-ups
+
+3.3 Daily Feedback Module
+	•	Recovery readiness score (HRV, sleep, soreness input)
+	•	Daily plan recommendations (training type, nutrition targets, cardio duration)
+	•	Real-time alerting for signs of overtraining or underrecovery
+
+3.4 Weekly Feedback Module
+	•	Goal tracking status
+	•	Fatigue vs fitness profiling (Chronic vs Acute Load)
+	•	Highlights: PRs, bodyweight changes, sleep consistency, dietary adherence
+	•	Behavior nudges: training frequency, sleep hygiene, hydration, meal timing
+
+3.5 Real-Time Coaching Module
+	•	Voice + haptic cueing during workouts
+	•	Tracks RPE, rest times, form deviations (via motion sensors)
+	•	Adapts session based on HR response, perceived effort
+	•	Supports strength, HIIT, cardio, mobility formats
+	•	Audio prompts: “Push harder,” “Back off,” “Rest longer,” “Perfect form”
+
+⸻
+
+4. User Flows
+	•	Onboarding: goal selection → import health data → nutrition sync → baseline testing → training plan assignment
+	•	Daily Use: opens app → receives day plan → logs session and food → receives real-time and post-session feedback
+	•	Weekly Use: receives weekly summary, performance vs goal prediction, and recommendations
+
+⸻
+
+5. Technical Requirements
+	•	iOS native (Swift), HealthKit, CoreMotion, CoreML integration
+	•	Backend: Python/Node.js API, PostgreSQL, ML model hosting (AWS/GCP)
+	•	AI models: Random Forest / LSTM for goal progression, anomaly detection for overtraining
+	•	Privacy-first design: local processing where possible, user opt-in data syncing
+
+⸻
+
+6. Success Metrics
+	•	% of users improving body comp/performance within 8 weeks
+	•	Engagement: daily active use, workout logging frequency
+	•	Prediction accuracy vs actual progress
+	•	User adherence to coach recommendations
+
+⸻
+
+7. Future Extensions (v2+)
+	•	Blood glucose integration (Levels/CGMs)
+	•	Wearable compatibility (Oura, WHOOP, Garmin)
+	•	Personalized nutrition coaching (GPT-powered)
+	•	Group coaching and leaderboards
+	•	Injury detection and rehab protocols
