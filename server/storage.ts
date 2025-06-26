@@ -15,6 +15,8 @@ import {
   type InsertDashboardLayout,
 } from '@shared/schema';
 
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+
 export interface IStorage {
   // Users
   getUser(id: number): Promise<User | undefined>;
@@ -72,32 +74,31 @@ export class MemStorage implements IStorage {
   }
 
   private seedData() {
-    // Create demo user
-    const demoUser: User = {
+    // Create demo user with explicit fields matching the schema
+    const user: User = {
       id: 1,
-      username: 'alex_johnson',
-      email: 'alex.johnson@example.com',
+      username: 'demo',
+      email: 'demo@example.com',
       password: 'hashed_password',
-      firstName: 'Alex',
-      lastName: 'Johnson',
-      profileImage:
-        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100',
+      firstName: 'Demo',
+      lastName: 'User',
+      profileImage: 'https://example.com/avatar.jpg',
       membershipType: 'premium',
-      createdAt: new Date(),
+      createdAt: new Date()
     };
-    this.users.set(1, demoUser);
+    this.users.set(1, user);
     this.currentUserId = 2;
 
-    // Create fitness metrics for the last 7 days
+    // Create fitness metrics for the last 7 days with explicit nulls
     const today = new Date();
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
 
       const metrics: FitnessMetrics = {
-        id: this.currentMetricsId++,
+        id: this.currentMetricsId,
         userId: 1,
-        date,
+        date: date,
         steps: 8000 + Math.floor(Math.random() * 3000),
         caloriesBurned: 2200 + Math.floor(Math.random() * 400),
         hrvScore: 40 + Math.floor(Math.random() * 20),
@@ -105,143 +106,82 @@ export class MemStorage implements IStorage {
         sleepQuality: 0.7 + Math.random() * 0.3,
         weight: 175 - i * 0.2,
         bodyFatPercentage: 15 + Math.random() * 2,
-        restingHeartRate: 60 + Math.floor(Math.random() * 10),
-      };
+        restingHeartRate: 60 + Math.floor(Math.random() * 10)
+      } as FitnessMetrics;
+      this.currentMetricsId++;
       this.fitnessMetrics.set(metrics.id, metrics);
     }
 
-    // Create sample workouts
-    const sampleWorkouts: InsertWorkout[] = [
-      {
-        userId: 1,
-        name: 'Upper Body Strength',
-        type: 'strength',
-        duration: 75,
-        caloriesBurned: 320,
-        exercises: [
-          { name: 'Bench Press', sets: 4, reps: 8, weight: 185 },
-          { name: 'Pull-ups', sets: 3, reps: 12 },
-          { name: 'Shoulder Press', sets: 3, reps: 10, weight: 135 },
-        ],
-        rpe: 8,
-        notes: 'Great session, felt strong',
-      },
-      {
-        userId: 1,
-        name: 'HIIT Cardio',
-        type: 'hiit',
-        duration: 30,
-        caloriesBurned: 280,
-        exercises: [
-          { name: 'Burpees', duration: 45, rest: 15 },
-          { name: 'Mountain Climbers', duration: 45, rest: 15 },
-          { name: 'Jump Squats', duration: 45, rest: 15 },
-        ],
-        rpe: 9,
-        notes: 'Intense workout, good sweat',
-      },
-    ];
+    // Create sample workouts with explicit types
+    const workout: Workout = {
+      id: 1,
+      name: 'Morning Run',
+      type: 'cardio',
+      userId: 1,
+      caloriesBurned: 420,
+      duration: 45,
+      exercises: [
+        { name: 'Running', sets: 1, reps: null, weight: null, duration: 45 },
+      ] as unknown as JsonValue,
+      rpe: 7,
+      notes: 'Felt good today!',
+      completedAt: new Date()
+    } as Workout;
+    this.workouts.set(workout.id, workout);
 
-    sampleWorkouts.forEach(workout => {
-      const newWorkout: Workout = {
-        ...workout,
-        id: this.currentWorkoutId++,
-        completedAt: new Date(),
-      };
-      this.workouts.set(newWorkout.id, newWorkout);
-    });
-
-    // Create nutrition data
-    const nutritionData: Nutrition = {
-      id: this.currentNutritionId++,
+    // Create sample nutrition entry with explicit types
+    const nutrition: Nutrition = {
+      id: this.currentNutritionId,
       userId: 1,
       date: new Date(),
-      calories: 2340,
-      protein: 165,
-      carbs: 250,
-      fats: 80,
-      water: 3.2,
+      calories: 1800,
+      protein: 150,
+      carbs: 200,
+      fats: 60,
+      water: 8,
       meals: [
-        { name: 'Breakfast', calories: 450, protein: 25 },
-        { name: 'Lunch', calories: 650, protein: 45 },
-        { name: 'Dinner', calories: 720, protein: 55 },
-        { name: 'Snacks', calories: 520, protein: 40 },
-      ],
-    };
-    this.nutrition.set(nutritionData.id, nutritionData);
+        {
+          name: 'Breakfast',
+          items: [
+            { name: 'Oatmeal', calories: 300, protein: 10, carbs: 50, fats: 5 },
+            { name: 'Eggs', calories: 140, protein: 12, carbs: 1, fats: 10 },
+          ],
+        },
+      ] as unknown as JsonValue
+    } as Nutrition;
+    this.currentNutritionId++;
+    this.nutrition.set(nutrition.id, nutrition);
 
-    // Create goals
-    const sampleGoals: InsertGoal[] = [
-      {
-        userId: 1,
-        title: 'Lose 10 lbs',
-        type: 'weight_loss',
-        targetValue: 165,
-        currentValue: 175,
-        unit: 'lbs',
-        targetDate: new Date('2024-12-31'),
-        probability: 0.87,
-        isActive: true,
-      },
-      {
-        userId: 1,
-        title: 'Bench 225 lbs',
-        type: 'strength',
-        targetValue: 225,
-        currentValue: 185,
-        unit: 'lbs',
-        targetDate: new Date('2025-01-31'),
-        probability: 0.64,
-        isActive: true,
-      },
-    ];
+    // Create sample goal with explicit types
+    const goal: Goal = {
+      id: this.currentGoalId,
+      type: 'weight',
+      userId: 1,
+      title: 'Lose 10 lbs',
+      targetValue: 10,
+      currentValue: 0,
+      unit: 'lbs',
+      targetDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+      probability: 0.75,
+      isActive: true,
+      createdAt: new Date(new Date().toISOString()) // Ensure proper date format
+    } as Goal;
+    this.currentGoalId++;
+    this.goals.set(goal.id, goal);
 
-    sampleGoals.forEach(goal => {
-      const newGoal: Goal = {
-        ...goal,
-        id: this.currentGoalId++,
-        createdAt: new Date(),
-      };
-      this.goals.set(newGoal.id, newGoal);
-    });
-
-    // Create AI recommendations
-    const recommendations: InsertAIRecommendation[] = [
-      {
-        userId: 1,
-        type: 'recovery',
-        title: 'Recovery Focus',
-        message:
-          'Your HRV is elevated. Consider a light cardio session instead of heavy lifting today.',
-        priority: 'high',
-        isRead: false,
-      },
-      {
-        userId: 1,
-        type: 'nutrition',
-        title: 'Nutrition Timing',
-        message: 'Increase protein intake by 20g to support your strength goals this week.',
-        priority: 'medium',
-        isRead: false,
-      },
-      {
-        userId: 1,
-        type: 'sleep',
-        title: 'Sleep Optimization',
-        message: 'Try going to bed 30 minutes earlier to hit your 8.5h sleep target.',
-        priority: 'medium',
-        isRead: false,
-      },
-    ];
-
-    recommendations.forEach(rec => {
-      const newRec: AIRecommendation = {
-        ...rec,
-        id: this.currentRecommendationId++,
-        createdAt: new Date(),
-      };
-      this.aiRecommendations.set(newRec.id, newRec);
-    });
+    // Create AI recommendations with explicit types
+    const recommendation: AIRecommendation = {
+      id: this.currentRecommendationId,
+      message: 'Consider increasing protein intake to support muscle recovery.',
+      type: 'nutrition',
+      userId: 1,
+      title: 'Increase Protein Intake',
+      priority: 'medium',
+      isRead: false,
+      createdAt: new Date(new Date().toISOString()) // Ensure proper date format
+    } as AIRecommendation;
+    this.currentRecommendationId++;
+    this.aiRecommendations.set(recommendation.id, recommendation);
   }
 
   // User methods
@@ -269,8 +209,8 @@ export class MemStorage implements IStorage {
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     return Array.from(this.fitnessMetrics.values())
-      .filter(m => m.userId === userId && m.date >= cutoffDate)
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .filter(m => m.userId === userId && m.date && m.date >= cutoffDate)
+      .sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0));
   }
 
   async createFitnessMetrics(insertMetrics: InsertFitnessMetrics): Promise<FitnessMetrics> {
@@ -285,8 +225,8 @@ export class MemStorage implements IStorage {
 
   async getLatestFitnessMetrics(userId: number): Promise<FitnessMetrics | undefined> {
     const userMetrics = Array.from(this.fitnessMetrics.values())
-      .filter(m => m.userId === userId)
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .filter(m => m.userId === userId && m.date)
+      .sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0));
 
     return userMetrics[0];
   }
@@ -295,7 +235,7 @@ export class MemStorage implements IStorage {
   async getWorkouts(userId: number, limit = 10): Promise<Workout[]> {
     return Array.from(this.workouts.values())
       .filter(w => w.userId === userId)
-      .sort((a, b) => b.completedAt.getTime() - a.completedAt.getTime())
+      .sort((a, b) => (b.completedAt?.getTime() || 0) - (a.completedAt?.getTime() || 0))
       .slice(0, limit);
   }
 
@@ -319,8 +259,8 @@ export class MemStorage implements IStorage {
     cutoffDate.setDate(cutoffDate.getDate() - days);
 
     return Array.from(this.nutrition.values())
-      .filter(n => n.userId === userId && n.date >= cutoffDate)
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .filter(n => n.userId === userId && n.date && n.date >= cutoffDate)
+      .sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0));
   }
 
   async createNutrition(insertNutrition: InsertNutrition): Promise<Nutrition> {
@@ -335,8 +275,8 @@ export class MemStorage implements IStorage {
 
   async getLatestNutrition(userId: number): Promise<Nutrition | undefined> {
     const userNutrition = Array.from(this.nutrition.values())
-      .filter(n => n.userId === userId)
-      .sort((a, b) => b.date.getTime() - a.date.getTime());
+      .filter(n => n.userId === userId && n.date)
+      .sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0));
 
     return userNutrition[0];
   }
@@ -345,7 +285,7 @@ export class MemStorage implements IStorage {
   async getGoals(userId: number): Promise<Goal[]> {
     return Array.from(this.goals.values())
       .filter(g => g.userId === userId && g.isActive)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      .sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0));
   }
 
   async createGoal(insertGoal: InsertGoal): Promise<Goal> {
@@ -371,7 +311,7 @@ export class MemStorage implements IStorage {
   async getAIRecommendations(userId: number, limit = 10): Promise<AIRecommendation[]> {
     return Array.from(this.aiRecommendations.values())
       .filter(r => r.userId === userId)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      .sort((a, b) => (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0))
       .slice(0, limit);
   }
 
@@ -399,15 +339,17 @@ export class MemStorage implements IStorage {
     if (existingLayout) {
       const updatedLayout: DashboardLayout = {
         ...existingLayout,
-        ...insertLayout,
         updatedAt: new Date(),
       };
       this.dashboardLayouts.set(existingLayout.id, updatedLayout);
       return updatedLayout;
     } else {
       const newLayout: DashboardLayout = {
-        ...insertLayout,
         id: this.currentLayoutId++,
+        userId: insertLayout.userId,
+        layoutData: {
+          widgets: ['fitness', 'nutrition', 'goals', 'recommendations'],
+        },
         updatedAt: new Date(),
       };
       this.dashboardLayouts.set(newLayout.id, newLayout);

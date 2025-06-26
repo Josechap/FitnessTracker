@@ -28,8 +28,12 @@ export function PerformanceChart({ metrics }: PerformanceChartProps) {
 
   // Transform metrics data for chart
   const chartData = metrics
-    .map((metric, index) => ({
-      name: new Date(metric.date).toLocaleDateString('en-US', { weekday: 'short' }),
+    .map(metric => ({
+      name: metric.date
+        ? new Date(metric.date).toLocaleDateString('en-US', {
+            weekday: 'short',
+          })
+        : '',
       trainingLoad: (metric.caloriesBurned || 0) / 30, // Normalize calories to training load
       recoveryScore: (metric.hrvScore || 0) * 2, // Convert HRV to percentage
       sleepQuality: (metric.sleepQuality || 0) * 100,

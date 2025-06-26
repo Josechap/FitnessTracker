@@ -43,7 +43,7 @@ export function DashboardLayout({
 }: DashboardLayoutProps) {
   const { layouts, onLayoutChange } = useWidgetLayout(
     user.id,
-    (savedLayout?.layoutData as any) || undefined,
+    savedLayout?.layoutData as import('react-grid-layout').Layouts | undefined,
   );
 
   const renderWidget = (key: string) => {

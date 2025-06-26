@@ -64,6 +64,12 @@ export default [
     },
   },
   {
+    files: ['server/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
+  {
     plugins: {
       react,
       'react-hooks': reactHooks,

@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
+  let capturedJsonResponse: Record<string, unknown> | undefined;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -39,11 +39,17 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || 'Internal Server Error';
+  app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    // prettier-ignore
+    const { status, statusCode, message } = (err as {
+      status?: number;
+      statusCode?: number;
+      message?: string;
+    }) ?? {};
+    const statusToSend = status ?? statusCode ?? 500;
+    const messageToSend = message ?? 'Internal Server Error';
 
-    res.status(status).json({ message });
+    res.status(statusToSend).json({ message: messageToSend });
     throw err;
   });
 
